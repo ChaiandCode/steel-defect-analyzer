@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import axios from 'axios'
 
@@ -73,10 +73,10 @@ export default function Analyzer() {
     const formData = new FormData()
     formData.append('file', image)
     try {
-      const res = await axios.post('http://127.0.0.1:8000/analyze', formData)
+      const res = await axios.post('https://steelscan-backend.onrender.com/analyze', formData)
       setResult(res.data)
     } catch {
-      setError('Analysis failed. Make sure the backend server is running.')
+      setError('Analysis failed. Please try again in a moment.')
     }
     setLoading(false)
   }
@@ -228,7 +228,6 @@ export default function Analyzer() {
                 className="glass-card"
                 style={{ overflow: 'hidden' }}
               >
-                {/* Result header */}
                 <div style={{
                   padding: '1.5rem',
                   borderBottom: '1px solid var(--border)',
@@ -262,7 +261,6 @@ export default function Analyzer() {
                 </div>
 
                 <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  {/* Confidence bar */}
                   <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
                       <span style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'DM Mono, monospace', fontWeight: 600 }}>CONFIDENCE SCORE</span>
@@ -282,18 +280,11 @@ export default function Analyzer() {
                     </div>
                   </div>
 
-                  {/* Description */}
-                  <div style={{
-                    padding: '1rem',
-                    background: 'var(--bg2)',
-                    borderRadius: '12px',
-                    border: '1px solid var(--border)'
-                  }}>
+                  <div style={{ padding: '1rem', background: 'var(--bg2)', borderRadius: '12px', border: '1px solid var(--border)' }}>
                     <div style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'DM Mono, monospace', marginBottom: '6px', fontWeight: 600 }}>DESCRIPTION</div>
                     <p style={{ fontSize: '13px', color: 'var(--text2)', lineHeight: 1.7, margin: 0 }}>{result.details?.description}</p>
                   </div>
 
-                  {/* Recommendation */}
                   <div style={{
                     padding: '1rem',
                     background: 'linear-gradient(135deg, rgba(99,102,241,0.05), rgba(20,184,166,0.05))',
@@ -305,7 +296,6 @@ export default function Analyzer() {
                     <p style={{ fontSize: '13px', color: 'var(--text)', lineHeight: 1.7, margin: 0 }}>{result.details?.recommendation}</p>
                   </div>
 
-                  {/* Alternatives */}
                   {result.alternatives?.length > 0 && (
                     <div>
                       <div style={{ fontSize: '11px', color: 'var(--text3)', fontFamily: 'DM Mono, monospace', marginBottom: '10px', fontWeight: 600 }}>OTHER POSSIBILITIES</div>
